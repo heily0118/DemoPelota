@@ -4,17 +4,33 @@
  */
 package autonoma.demopelota.gui;
 
+import autonoma.demopelota.elements.Campo;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import javax.swing.Timer;
+
 /**
- *
- * @author USUARIO
+ * 
+ * @author Heily Yohana Rios Ayala <heilyy.riosa@autonoma.edu.co>
+ * @since 20250524
+ * @version 1.0.0
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
+    private Campo campo;
+    private BufferedImage buffer;
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal() {
+    public VentanaPrincipal(Campo campo) {
         initComponents();
+        this.campo = campo;
+         setSize(1200, 600);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        
+           Timer timer = new Timer(50, e -> repaint());
+         timer.start();
     }
 
     /**
@@ -44,6 +60,39 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
  
 
+    public void setCampo(Campo campo) {
+        this.campo = campo;
+    }
+
+        @Override
+    public void paint(Graphics g) {
+      if (buffer == null || buffer.getWidth() != getWidth() || buffer.getHeight() != getHeight()) {
+        buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        }
+
+        Graphics g2 = buffer.getGraphics();
+        
+        g2.clearRect(0, 0, buffer.getWidth(), buffer.getHeight());
+
+       
+        if (campo!= null) {
+            campo.paint(g2, getWidth(), getHeight());
+        }
+
+        g2.dispose();
+
+       
+        g.drawImage(buffer, 0, 0, null);
+    }
+
+    public void refresh() {
+        this.repaint();
+    }
+
+    public Rectangle getBoundaries() {
+        return this.getBounds();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,10 @@
  */
 package autonoma.demopelota.main;
 
+import autonoma.demopelota.elements.Campo;
+import autonoma.demopelota.elements.Pelota;
+import autonoma.demopelota.gui.VentanaPrincipal;
+
 /**
  * 
  * @author Heily Yohana Rios Ayala <heilyy.riosa@autonoma.edu.co>
@@ -16,7 +20,19 @@ public class DemoPelota {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       
+         Pelota pelota = new Pelota(5, 100, 100, 50, 50);
+        
+       
+        Campo campo = new Campo(pelota);
+
+      
+        VentanaPrincipal ventana = new VentanaPrincipal(campo);
+        ventana.setVisible(true);
+
+       
+        Thread hiloPelota = new Thread(pelota);
+        hiloPelota.start();
     }
     
 }
